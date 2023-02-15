@@ -1,21 +1,26 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRouteDef } from './routeDef';
+import { observer } from 'mobx-react';
+import styled from 'styled-components';
+import AppPages from './appPages';
+import useWindowSize from '../hook/useWindowSize';
 
-const AppPages = () => {
+const ViewArea = styled.div<{ width?: number, height?: number }>`
+display: flex;
+width: ${({ width }) => width ? `${width}px` : `100%`};
+height: ${({ height }) => height ? `${height}px` : `100%`};
+`;
+
+const AppScreen = observer(() => {
+    const windowSize = useWindowSize();
+
     return (
-        <BrowserRouter>
-            <Routes>
-                { Object.entries({ ...AppRouteDef }).map(([ name, { path, element } ], index) => (
-                    <Route
-                        key={index}
-                        path={path}
-                        element={element}
-                    />
-                ))}
-            </Routes>
-        </BrowserRouter>
+        <ViewArea 
+            width={windowSize.width}
+            height={windowSize.height}
+        >
+            <AppPages />
+        </ViewArea>
     );
-}
+});
 
-export default AppPages;
+export default AppScreen;
