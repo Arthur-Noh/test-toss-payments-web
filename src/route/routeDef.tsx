@@ -5,7 +5,7 @@ import NotFound from '../pages/notFound';
 // Main
 const MainScreens = {
     Main: {
-        path: '/main',
+        path: '/main/:invoiceSeq',
         element: <Main />,
     },
 };
