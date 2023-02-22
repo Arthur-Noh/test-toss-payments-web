@@ -47,7 +47,7 @@ export const gray: IGray = {
 };
 
 export const primary: IPrimary = {
-    blue: '#327ABE',
-    red: '#DC342D',
-    yellow: '#F19A38',
+    blue: '#84B6F4',
+    red: '#FF6961',
+    yellow: '#FDFD96',
 };

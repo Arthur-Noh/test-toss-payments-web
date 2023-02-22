@@ -133,7 +133,7 @@ const Main = observer(() => {
         initInstance(SERVER_URL);
         initPaymentData();
         initPaymentInstance();
-    }, [ params ]);
+    }, []);
 
     return (
         <Layout>
