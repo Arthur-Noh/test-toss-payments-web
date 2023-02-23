@@ -1,6 +1,6 @@
 import { runInAction, makeObservable, observable, action, computed } from 'mobx';
 import { TossPaymentsInstance } from '@tosspayments/payment-sdk';
-import { DUMMY_DATA, PaymentType } from '../../constants/paymentMethod';
+import { PaymentType } from '../../constants/paymentMethod';
 import { ModelPaymentDTO } from '../../interface/modelDTO';
 import { IStore } from '../../helper/storeHelper';
 import paymentService from '../../service/paymentService';
