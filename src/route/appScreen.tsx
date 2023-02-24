@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import AppPages from './appPages';
-import useWindowSize from '../hook/useWindowSize';
 
 const ViewArea = styled.div<{ width?: number, height?: number }>`
 display: flex;
@@ -11,12 +10,12 @@ height: ${({ height }) => height ? `${height}px` : `100%`};
 `;
 
 const AppScreen = observer(() => {
-    const windowSize = useWindowSize();
+    // const windowSize = useWindowSize();
 
     return (
         <ViewArea 
-            width={windowSize.width}
-            height={windowSize.height}
+            // width={windowSize.width}
+            // height={windowSize.height}
         >
             <AppPages />
         </ViewArea>

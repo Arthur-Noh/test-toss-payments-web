@@ -1,6 +1,7 @@
-import { makeObservable, action, runInAction, observable } from 'mobx';
+import { makeObservable, action, runInAction, observable, computed } from 'mobx';
 import { getResultAmount, getResultInvoiceSeq, getResultKey } from '../../helper/queryUrlHelper';
 import { ModelPaymentDTO, ModelTossPaymentDTO } from '../../interface/modelDTO';
+import { ResponseDTO } from '../../interface/responseDTO';
 import orderService from '../../service/orderService';
 import { IStore } from './../../helper/storeHelper';
 
@@ -48,7 +49,17 @@ class ResultStore implements IStore {
             paymentData: observable,
             donePayment: observable,
 
+            requestPayment: action.bound,
             clear: action.bound,
+
+            setInvoiceSeq: action.bound,
+            setResultValues: action.bound,
+            setPaymentData: action.bound,
+            setDonePayment: action.bound,
+
+            resultKey: computed,
+            resultAmount: computed,
+            resultOrderId: computed,
         });
     };
 
@@ -59,10 +70,23 @@ class ResultStore implements IStore {
             orderId: `${this.resultOrderId}`,
             paymentKey: this.resultKey!,
         };
-        // console.log('body =>', body);
-        const response = await orderService.requestPayment(body);
+        // const response = await orderService.requestPayment(body);
+        const response: ResponseDTO = {
+            result: true,
+            status: 200,
+            code: 'success',
+            message: '결제 요청 성공',
+            data: {},
+        }
         return response;
     }
+
+    setInvoiceSeq(invoiceSeq: number) {
+        runInAction(() => {
+            this.invoiceSeq = invoiceSeq;
+        });
+    }
+
     private setResultKey(key: string) {
         runInAction(() => {
             this._paymentKey = key;
@@ -96,6 +120,18 @@ class ResultStore implements IStore {
         return true;
     }
 
+    setPaymentData(paymentData: Array<ModelPaymentDTO>) {
+        runInAction(() => {
+            this.paymentData = paymentData;
+        });
+    }
+
+    setDonePayment(donePayment: ModelPaymentDTO) {
+        runInAction(() => {
+            this.donePayment = donePayment;
+        });
+    }
+
     get resultKey() {
         return this._paymentKey;
     };
@@ -110,7 +146,15 @@ class ResultStore implements IStore {
 
     clear () {
         runInAction(() => {
-
+            this.invoiceSeq = initialState.invoiceSeq;
+            this._orderId = initialState._orderId;
+            this._paymentKey = initialState._paymentKey;
+            this._amount = initialState._amount;
+            this.paymentData = initialState.paymentData;
+            this.donePayment = initialState.donePayment;
         });
     }
 }
+
+const resultStore = new ResultStore();
+export default resultStore;
